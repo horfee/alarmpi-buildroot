@@ -1,0 +1,50 @@
+--- dl/Makefile	2017-05-13 15:22:02.000000000 +0200
++++ output/build/pigpio-f032029bf9cda3755c62fc69d3a5fc2f566b7ea3/Makefile	2017-05-16 08:58:34.888698741 +0200
+@@ -1,12 +1,13 @@
+ #
+ # Set CROSS_PREFIX to prepend to all compiler tools at once for easier
+ # cross-compilation.
+-CROSS_PREFIX =
+-CC           = $(CROSS_PREFIX)gcc
+-AR           = $(CROSS_PREFIX)ar
+-RANLIB       = $(CROSS_PREFIX)ranlib
+-SIZE         = $(CROSS_PREFIX)size
+-STRIP        = $(CROSS_PREFIX)strip
+ SHLIB        = $(CC) -shared
+ STRIPLIB     = $(STRIP) --strip-unneeded
+ 
+@@ -71,6 +72,7 @@
+ 
+ pig2vcd:	pig2vcd.o
+ 	$(CC) -o pig2vcd pig2vcd.o
+ 	$(STRIP) pig2vcd
+ 
+ clean:
+@@ -90,13 +92,13 @@
+ 	install -m 0755 pig2vcd           $(DESTDIR)$(bindir)
+ 	install -m 0755 pigpiod           $(DESTDIR)$(bindir)
+ 	install -m 0755 pigs              $(DESTDIR)$(bindir)
+-	if which python2; then python2 setup.py install; fi
+-	if which python3; then python3 setup.py install; fi
+ 	install -m 0755 -d                $(DESTDIR)$(mandir)/man1
+ 	install -m 0644 *.1               $(DESTDIR)$(mandir)/man1
+ 	install -m 0755 -d                $(DESTDIR)$(mandir)/man3
+ 	install -m 0644 *.3               $(DESTDIR)$(mandir)/man3
+-	ldconfig
++	$(LDCONFIG)
+ 
+ uninstall:
+ 	rm -f $(DESTDIR)$(includedir)/pigpio.h
+@@ -108,11 +110,11 @@
+ 	rm -f $(DESTDIR)$(bindir)/pig2vcd
+ 	rm -f $(DESTDIR)$(bindir)/pigpiod
+ 	rm -f $(DESTDIR)$(bindir)/pigs
+-	if which python2; then python2 setup.py install --record /tmp/pigpio >/dev/null; xargs rm -f < /tmp/pigpio >/dev/null; fi
+-	if which python3; then python3 setup.py install --record /tmp/pigpio >/dev/null; xargs rm -f < /tmp/pigpio >/dev/null; fi
+ 	rm -f $(DESTDIR)$(mandir)/man1/pig*.1
+ 	rm -f $(DESTDIR)$(mandir)/man3/pig*.3
+-	ldconfig
++	$(LDCONFIG)
+ 
+ $(LIB1):	$(OBJ1)
+ 	$(SHLIB) -o $(LIB1) $(OBJ1)

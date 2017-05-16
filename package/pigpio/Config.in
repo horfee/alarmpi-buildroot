@@ -1,0 +1,6 @@
+config BR2_PACKAGE_PIGPIO
+	bool "pigpio"
+	help
+		PIGPIO pigpio is a library for the Raspberry which allows control of the General Purpose Input Outputs (GPIO).  pigpio works on all versions of the PI.
+		see http://abyz.co.uk/rpi/pigpio/index.html
+
