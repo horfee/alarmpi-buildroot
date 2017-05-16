@@ -3,4 +3,19 @@ config BR2_PACKAGE_ALARMPI
 	help
 		AlarmPI is an application to handle your home safety system
 		see http://github.com/horfee/alarmpi for more information on this software
+	depends on BR2_PACKAGE_LIBEVENT && BR2_PACKAGE_SQLITE && BR2_PACKAGE_OPENSSL
 
+if BR2_PACKAGE_ALARMPI
+choice
+	prompt "Which library to use"
+	
+config BR2_PACKAGE_ALARMPIUSEWIRINGPI
+	bool "Wiring PI"
+	depends on BR2_PACKAGE_WIRINGPI
+	
+config BR2_PACKAGE_ALARMPIUSEPIGPIO
+	bool "PiGpio"
+	depends on BR2_PACKAGE_PIGPIO
+	
+endchoice
+endif

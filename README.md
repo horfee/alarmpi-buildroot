@@ -1,2 +1,2 @@
 # alarmpi-buildroot
-Buildroot packages and configuration
+Buildroot packages and configuration for Alarm PI package
