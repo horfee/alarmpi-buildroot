@@ -1,26 +1,31 @@
---- dl/Makefile	2017-05-13 15:22:02.000000000 +0200
-+++ output/build/pigpio-f032029bf9cda3755c62fc69d3a5fc2f566b7ea3/Makefile	2017-05-16 08:58:34.888698741 +0200
-@@ -1,12 +1,13 @@
- #
- # Set CROSS_PREFIX to prepend to all compiler tools at once for easier
- # cross-compilation.
+diff --git a/package/pigpio/Makefile b/package/pigpio/Makefile
+index 02e52d4..2398473 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,12 +1,4 @@
+-#
+-# Set CROSS_PREFIX to prepend to all compiler tools at once for easier
+-# cross-compilation.
 -CROSS_PREFIX =
 -CC           = $(CROSS_PREFIX)gcc
 -AR           = $(CROSS_PREFIX)ar
 -RANLIB       = $(CROSS_PREFIX)ranlib
 -SIZE         = $(CROSS_PREFIX)size
 -STRIP        = $(CROSS_PREFIX)strip
++
  SHLIB        = $(CC) -shared
  STRIPLIB     = $(STRIP) --strip-unneeded
  
-@@ -71,6 +72,7 @@
+@@ -31,7 +23,7 @@
  
- pig2vcd:	pig2vcd.o
- 	$(CC) -o pig2vcd pig2vcd.o
- 	$(STRIP) pig2vcd
+ LL3      = -L. -lpigpiod_if2 -pthread -lrt
  
- clean:
-@@ -90,13 +92,13 @@
+-prefix = /usr/local
++prefix = /usr
+ exec_prefix = $(prefix)
+ bindir = $(exec_prefix)/bin
+ includedir = $(prefix)/include
+@@ -90,13 +82,10 @@
  	install -m 0755 pig2vcd           $(DESTDIR)$(bindir)
  	install -m 0755 pigpiod           $(DESTDIR)$(bindir)
  	install -m 0755 pigs              $(DESTDIR)$(bindir)
@@ -31,11 +36,10 @@
  	install -m 0755 -d                $(DESTDIR)$(mandir)/man3
  	install -m 0644 *.3               $(DESTDIR)$(mandir)/man3
 -	ldconfig
-+	$(LDCONFIG)
  
  uninstall:
  	rm -f $(DESTDIR)$(includedir)/pigpio.h
-@@ -108,11 +110,11 @@
+@@ -108,11 +97,8 @@
  	rm -f $(DESTDIR)$(bindir)/pig2vcd
  	rm -f $(DESTDIR)$(bindir)/pigpiod
  	rm -f $(DESTDIR)$(bindir)/pigs
@@ -44,7 +48,6 @@
  	rm -f $(DESTDIR)$(mandir)/man1/pig*.1
  	rm -f $(DESTDIR)$(mandir)/man3/pig*.3
 -	ldconfig
-+	$(LDCONFIG)
  
  $(LIB1):	$(OBJ1)
  	$(SHLIB) -o $(LIB1) $(OBJ1)
